@@ -16,10 +16,15 @@ public class Keyboard extends JPanel {
         GridBagConstraints constraints = new GridBagConstraints();
 
         setLayout(layout);
+        constraints.weightx = 1;
+        constraints.weighty =1;
+        constraints.fill = GridBagConstraints.BOTH;
 
+        constraints.gridwidth = 3;
         addButton("AC", DARK_GRAY, constraints, 0, 0);
-        addButton("+/-", DARK_GRAY, constraints, 1, 0);
-        addButton("%", DARK_GRAY, constraints, 2, 0);
+        constraints.gridwidth = 1;
+//        addButton("+/-", DARK_GRAY, constraints, 1, 0);
+//        addButton("%", DARK_GRAY, constraints, 2, 0);
         addButton("/", ORANGE, constraints, 3, 0);
 
         addButton("7", LIGHT_GRAY, constraints, 0, 1);
@@ -38,8 +43,9 @@ public class Keyboard extends JPanel {
         addButton("3", LIGHT_GRAY, constraints, 2, 3);
         addButton("+", ORANGE, constraints, 3, 3);
 
+        constraints.gridwidth = 2;
         addButton("0", LIGHT_GRAY, constraints, 0, 4);
-        addButton("0", LIGHT_GRAY, constraints, 1, 4);
+        constraints.gridwidth = 1;
         addButton(",", LIGHT_GRAY, constraints, 2, 4);
         addButton("=", ORANGE, constraints, 3, 4);
 
