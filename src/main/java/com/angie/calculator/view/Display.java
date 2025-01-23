@@ -1,5 +1,7 @@
 package com.angie.calculator.view;
 
+import com.angie.calculator.model.Memory;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -12,7 +14,7 @@ public class Display extends JPanel {
 
         setBackground(new Color(46, 49, 50));
 
-        label = new JLabel("123,56");
+        label = new JLabel(Memory.getInstance().getCurrentText());
         label.setForeground(Color.WHITE);
         label.setFont(new Font("courier", Font.PLAIN, 30));
 
