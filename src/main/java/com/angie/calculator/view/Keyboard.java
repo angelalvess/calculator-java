@@ -1,4 +1,11 @@
 package com.angie.calculator.view;
 
-public class Keyboard {
+import javax.swing.*;
+import java.awt.*;
+
+public class Keyboard extends JPanel {
+
+    public Keyboard () {
+
+    }
 }

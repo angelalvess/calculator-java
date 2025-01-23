@@ -1,4 +1,11 @@
 package com.angie.calculator.view;
 
-public class Display {
+import javax.swing.*;
+import java.awt.*;
+
+public class Display extends JPanel {
+
+    public Display () {
+
+    }
 }
