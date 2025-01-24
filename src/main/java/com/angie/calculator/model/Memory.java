@@ -7,7 +7,7 @@ public class Memory {
 
 
     private enum TypeCommand {
-        CLEAN, NUMBER, DIVIDE, MULTIPLY, SUBTRACT, SUMM, EQUALS, COMMA;
+        CLEAN, NUMBER, DIVIDE, MULTIPLY, SUBTRACT, SUMM, EQUALS, COMMA, SIGNAL;
     }
 
     private static final Memory instancie = new Memory();
@@ -46,8 +46,16 @@ public class Memory {
             bufferText = "";
             replace = false;
             lastOperation = null;
+        } else if (typeCommand == TypeCommand.SIGNAL && currentText.contains("-")) {
+            currentText = currentText.substring(1);
+
+
+        } else if (typeCommand == TypeCommand.SIGNAL && !currentText.contains("-")) {
+            currentText = "-" + currentText;
+
+
         } else if (typeCommand == TypeCommand.NUMBER || typeCommand == TypeCommand.COMMA) {
-            currentText = replace ? text : currentText + text; // text equilave as op
+            currentText = replace ? text : currentText + text; // text equilave a op
             replace = false;
         } else {
             replace = true;
@@ -114,6 +122,8 @@ public class Memory {
                 return TypeCommand.SUBTRACT;
             } else if (",".equals(text) && !currentText.contains(",")) {
                 return TypeCommand.COMMA;
+            } else if ("+/-".equals(text) && !currentText.contains(",")) {
+                return TypeCommand.SIGNAL;
             } else if ("=".equals(text)) {
                 return TypeCommand.EQUALS;
             }
