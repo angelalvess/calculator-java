@@ -13,7 +13,10 @@ public class Memory {
     private static final Memory instancie = new Memory();
     private final List<MemoryObserver> observers = new ArrayList<>();
 
+    private TypeCommand lastOperation = null;
+    private boolean replace = false;
     private String currentText = "";
+    private String bufferText = "";
 
     private Memory () {
     }
@@ -34,14 +37,34 @@ public class Memory {
 
     public void processCommand (String text) {
 
-        System.out.println(detectTypeCommand(text));
-        if ("AC".equals(text)) {
+
+        TypeCommand typeCommand = detectTypeCommand(text);
+
+        if (typeCommand == null) {
+            return;
+        } else if (typeCommand == TypeCommand.CLEAN) {
             currentText = "";
+            bufferText = "";
+            replace = false;
+            lastOperation = null;
+        } else if (typeCommand == TypeCommand.NUMBER || typeCommand == TypeCommand.COMMA   ) {
+            currentText = replace ? text : currentText + text;
+            replace = false;
         } else {
-            currentText += text;
+            replace = true;
+            currentText = obtainOperationResults();
+            bufferText = currentText;
+            lastOperation = typeCommand;
+
         }
 
         observers.stream().forEach(observer -> observer.changedValue(getCurrentText()));
+    }
+
+
+
+    private String obtainOperationResults() {
+        return "A";
     }
 
     private TypeCommand detectTypeCommand (String text) {
@@ -64,7 +87,7 @@ public class Memory {
                 return TypeCommand.SUMM;
             } else if ("-".equals(text)) {
                 return TypeCommand.SUBTRACT;
-            } else if (",".equals(text)) {
+            } else if (",".equals(text) && !currentText.contains(",")) {
                 return TypeCommand.COMMA;
             } else if ("=".equals(text)) {
                 return TypeCommand.EQUALS;
