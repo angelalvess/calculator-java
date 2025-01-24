@@ -21,14 +21,14 @@ public class Keyboard extends JPanel implements ActionListener {
 
         setLayout(layout);
         constraints.weightx = 1;
-        constraints.weighty =1;
+        constraints.weighty = 1;
         constraints.fill = GridBagConstraints.BOTH;
 
-        constraints.gridwidth = 3;
+        constraints.gridwidth = 2;
         addButton("AC", DARK_GRAY, constraints, 0, 0);
+
         constraints.gridwidth = 1;
-//        addButton("+/-", DARK_GRAY, constraints, 1, 0);
-//        addButton("%", DARK_GRAY, constraints, 2, 0);
+        addButton("+/-", DARK_GRAY, constraints, 2, 0);
         addButton("/", ORANGE, constraints, 3, 0);
 
         addButton("7", LIGHT_GRAY, constraints, 0, 1);
@@ -67,12 +67,11 @@ public class Keyboard extends JPanel implements ActionListener {
     }
 
 
-
     @Override
     public void actionPerformed (ActionEvent e) {
-        if(e.getSource() instanceof JButton) {
-            JButton button = (JButton)  e.getSource();
+        if (e.getSource() instanceof JButton) {
+            JButton button = (JButton) e.getSource();
             Memory.getInstance().processCommand(button.getText());
-         }
+        }
     }
 }

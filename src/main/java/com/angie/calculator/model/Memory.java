@@ -37,7 +37,6 @@ public class Memory {
 
     public void processCommand (String text) {
 
-
         TypeCommand typeCommand = detectTypeCommand(text);
 
         if (typeCommand == null) {
@@ -47,8 +46,8 @@ public class Memory {
             bufferText = "";
             replace = false;
             lastOperation = null;
-        } else if (typeCommand == TypeCommand.NUMBER || typeCommand == TypeCommand.COMMA   ) {
-            currentText = replace ? text : currentText + text;
+        } else if (typeCommand == TypeCommand.NUMBER || typeCommand == TypeCommand.COMMA) {
+            currentText = replace ? text : currentText + text; // text equilave as op
             replace = false;
         } else {
             replace = true;
@@ -62,9 +61,35 @@ public class Memory {
     }
 
 
+    private String obtainOperationResults () {
 
-    private String obtainOperationResults() {
-        return "A";
+        if (lastOperation == null || lastOperation == TypeCommand.EQUALS) {
+            return currentText;
+        }
+
+        double bufferNumber = Double.parseDouble(bufferText.replace(",", "."));
+        double currentNumber = Double.parseDouble(currentText.replace(",", "."));
+
+
+        double result = 0;
+
+        if (lastOperation == TypeCommand.SUMM) {
+            result = bufferNumber + currentNumber;
+        } else if (lastOperation == TypeCommand.SUBTRACT) {
+            result = bufferNumber - currentNumber;
+        } else if (lastOperation == TypeCommand.MULTIPLY) {
+            result = bufferNumber * currentNumber;
+        } else if (lastOperation == TypeCommand.DIVIDE) {
+            result = bufferNumber / currentNumber;
+        }
+
+
+        String resultString = Double.toString(result).replace(".", ",");
+
+
+        boolean resultInt = resultString.endsWith(",0");
+
+        return resultInt ? resultString.replace(",0", "") : resultString;
     }
 
     private TypeCommand detectTypeCommand (String text) {
