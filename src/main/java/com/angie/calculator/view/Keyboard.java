@@ -1,9 +1,13 @@
 package com.angie.calculator.view;
 
+import com.angie.calculator.model.Memory;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Keyboard extends JPanel {
+public class Keyboard extends JPanel implements ActionListener {
 
 
     private final Color LIGHT_GRAY = new Color(99, 99, 99);
@@ -58,6 +62,17 @@ public class Keyboard extends JPanel {
         c.gridy = y;
 
         Button button = new Button(text, color);
+        button.addActionListener(this);
         add(button, c);
+    }
+
+
+
+    @Override
+    public void actionPerformed (ActionEvent e) {
+        if(e.getSource() instanceof JButton) {
+            JButton button = (JButton)  e.getSource();
+            Memory.getInstance().processCommand(button.getText());
+         }
     }
 }

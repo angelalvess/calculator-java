@@ -1,16 +1,20 @@
 package com.angie.calculator.view;
 
 import com.angie.calculator.model.Memory;
+import com.angie.calculator.model.MemoryObserver;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class Display extends JPanel {
+
+public class Display extends JPanel implements MemoryObserver {
+
 
 
     private final JLabel label;
 
     public Display () {
+        Memory.getInstance().registerObservers(this);
 
         setBackground(new Color(46, 49, 50));
 
@@ -20,5 +24,10 @@ public class Display extends JPanel {
 
         setLayout(new FlowLayout(FlowLayout.RIGHT, 21, 17));
         add(label);
+    }
+
+    @Override
+    public void changedValue (String newValue) {
+        label.setText(newValue);
     }
 }
